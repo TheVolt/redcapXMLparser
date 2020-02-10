@@ -13,13 +13,13 @@ import csv
 import xml.etree.ElementTree as ET
 
 # set working directory
-os.chdir('C:\\Users\\cabxr\\Desktop\\Redcap Surveys-20190820T145856Z-001\\Redcap Surveys')
+os.chdir('directory_path')
 
 # check working diretory
 print(os.getcwd())
 
 # parse xml files
-docTree = ET.parse("6mi.xml")
+docTree = ET.parse("file.xml")
 
 # get root items from xml
 root = docTree.getroot()
@@ -31,7 +31,7 @@ else:
     print("file not loaded")
 
 # open a csv file for writing
-xml_data = open('6mi.csv', 'w', encoding='utf-8')
+xml_data = open('file.csv', 'w', encoding='utf-8')
 
 # create csv writer object
 csvwriter = csv.writer(xml_data, lineterminator='\n')
@@ -67,7 +67,7 @@ for member in root.findall('.//{http://www.cdisc.org/ns/odm/v1.3}ItemDef'):
     var=member.attrib['Name']
     xml_variables.append(var)
     
-    formName='6MonthImmediateSurvey'
+    formName='formname'
     xml_variables.append(formName)
     
     fieldType=member.attrib['{https://projectredcap.org}FieldType']
@@ -101,14 +101,5 @@ for member in root.findall('.//{http://www.cdisc.org/ns/odm/v1.3}ItemDef'):
     xml_variables.append(choiceVals)
     
     csvwriter.writerow(xml_variables)
-                
-#for i in root:
- #   for j in i:
-  #      for k in j:
-   #         print(k.attrib)
-            #for l in k:
-    #            for m in l:
-     #               print(m)
-                    #print(m.text)
 
 xml_data.close()
